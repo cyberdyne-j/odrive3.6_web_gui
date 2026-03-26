@@ -2,7 +2,7 @@ Flask==2.3.3
 Flask-CORS==4.0.0
 odrive==0.6.10.post0
 pystray==0.19.4
-Pillow==10.0.1
+Pillow
 requests>=2.28.0
 pyinstaller
 pyusb>=1.2.1

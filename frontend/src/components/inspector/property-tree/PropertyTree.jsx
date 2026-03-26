@@ -20,7 +20,7 @@ import { usePropertyEditor } from '../../../hooks/property-tree/usePropertyEdito
 import { usePropertyTreeFilter } from '../../../hooks/property-tree/usePropertyTreeFilter'
 import PropertyItem from './PropertyItem'
 import { getFavourites } from '../../../utils/propertyFavourites'
-import Observer from '@researchgate/react-intersection-observer'
+import { useInView } from 'react-intersection-observer'
 
 const PropertyTree = ({ 
   odriveState, 
@@ -443,16 +443,17 @@ const PropertyTree = ({
 }
 
 const LazyItem = ({ children }) => {
-  const [visible, setVisible] = useState(false)
-  const handleChange = ({ isIntersecting }) => {
-    if (isIntersecting) setVisible(true)
-  }
+  const { ref, inView } = useInView({
+    rootMargin: '100px',
+    triggerOnce: true
+  })
+
   return (
-    <Observer onChange={handleChange} rootMargin="100px">
-      <Box minHeight="42px">
-        {visible ? children : <Skeleton height="38px" borderRadius="md" my={1} />}
-      </Box>
-    </Observer>
+    <Box ref={ref} minHeight="42px">
+      {inView
+        ? children
+        : <Skeleton height="38px" borderRadius="md" my={1} />}
+    </Box>
   )
 }
 
